@@ -1,22 +1,39 @@
-use std::ops;
+use std::ops::{Add, Mul};
+
+pub struct Scalar {
+    value: f64,
+}
 
 pub struct Matrix {
     n: usize,
     m: usize,
-    pub data: Vec<Vec<f64>>,
+    pub data: Vec<f64>,
 }
 
 impl Matrix {
     pub fn new(n: usize, m: usize, e: f64) -> Matrix {
         let matrix = Matrix {
-            n: n,
-            m: m,
-            data: vec![vec![e; n]; m],
+            n,
+            m,
+            data: vec![e; n * m],
         };
         return matrix;
     }
+
+    pub fn get(i: usize, j: usize) -> f64 {
+        0.0
+    }
 }
-impl ops::Add<Matrix> for Matrix {
+
+impl Scalar {
+    pub fn new(value: f64) -> Scalar {
+        Scalar {
+            value,
+        }
+    }
+}
+
+impl Add<Matrix> for Matrix {
     type Output = Self;
 
     fn add(self, rhs: Matrix) -> Matrix {
@@ -24,12 +41,24 @@ impl ops::Add<Matrix> for Matrix {
             panic!("Incompatible sizes");
         }
 
-        let mut matrix_sum = Matrix::new(self.n, self.m, 0.0);
-        for i in 0..self.n {
-            for j in 0..self.m {
-                matrix_sum.data[i][j] = self.data[i][j] + rhs.data[i][j]
-            }
+        Matrix {
+            n: self.n,
+            m: self.m,
+            data: (0..self.n * self.m)
+                .map(|i| self.data[i] + rhs.data[i])
+                .collect(),
         }
-        return matrix_sum;
+    }
+}
+
+impl Mul<Matrix> for Scalar {
+    type Output = Matrix;
+
+    fn mul(self, rhs: Matrix) -> Matrix {
+        Matrix {
+            n: rhs.n,
+            m: rhs.m,
+            data: rhs.data.iter().map(|v| v * self.value as f64).collect(),
+        }
     }
 }
