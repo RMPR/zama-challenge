@@ -56,4 +56,14 @@ mod tests {
         assert_eq!(m.n, 1);
         assert_eq!(m.m, 12);
     }
+
+    #[test]
+    fn matrix_mul() {
+        let mut m = matrix::Matrix::new(3, 3, 0.0);
+        let mut v = matrix::Matrix::new(3, 1, 0.0);
+        m.data = [1.0, 5.0, 7.0, 3.0, 8.0, 9.0, 4.0, 6.0, 2.0].to_vec();
+        v.data = [11.0, 12.0, 13.0].to_vec();
+
+        assert_eq!((m * v).data, vec![162.0, 246.0, 142.0]);
+    }
 }

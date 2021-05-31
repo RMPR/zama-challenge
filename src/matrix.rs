@@ -22,8 +22,12 @@ impl Matrix {
     }
 
     /// Return the element at line i and column j
-    pub fn get(i: usize, j: usize) -> f64 {
-        0.0
+    pub fn get(&mut self, i: usize, j: usize) -> f64 {
+        return self.data[self.n * i + j];
+    }
+
+    pub fn set(&mut self, i: usize, j: usize, value: f64) {
+        self.data[self.n * i + j] = value;
     }
 
     /// Apply tanh on each element of the Matrix and return a new one
@@ -80,5 +84,27 @@ impl Mul<Matrix> for Scalar {
             m: rhs.m,
             data: rhs.data.iter().map(|v| v * self.value as f64).collect(),
         }
+    }
+}
+
+impl Mul<Matrix> for Matrix {
+    type Output = Matrix;
+
+    fn mul(mut self, mut rhs: Matrix) -> Matrix {
+        // TODO; Use a more efficient algorithm
+        if self.m != rhs.n {
+            panic!("Size mismatch");
+        }
+        let mut res = Matrix::new(self.n, rhs.m, 0.0);
+        for i in 0..self.n {
+            for j in 0..rhs.m {
+                let mut sum: f64 = 0.0;
+                for k in 0..rhs.n {
+                    sum += self.get(i, k) * rhs.get(j, k);
+                }
+                res.set(j, i, sum);
+            }
+        }
+        return res;
     }
 }
