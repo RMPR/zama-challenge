@@ -27,30 +27,18 @@ impl Matrix {
     }
 
     /// Apply tanh on each element of the Matrix and return a new one
-    pub fn tanh(self) -> Matrix {
-        Matrix {
-            n: self.n,
-            m: self.m,
-            data: self.data.iter().map(|v| v.tanh()).collect(),
-        }
+    pub fn tanh(&mut self) {
+        self.data = self.data.iter().map(|v| v.tanh()).collect();
     }
 
     /// Apply relU on each element of the Matrix and return a new one
-    pub fn relu(self) -> Matrix {
-        Matrix {
-            n: self.n,
-            m: self.m,
-            data: self.data.iter().map(|v| v.max(0.0)).collect(),
-        }
+    pub fn relu(&mut self) {
+        self.data = self.data.iter().map(|v| v.max(0.0)).collect();
     }
 
     /// Apply sigmoid on each element of the Matrix and return a new one
-    pub fn sigmoid(self) -> Matrix {
-        Matrix {
-            n: self.n,
-            m: self.m,
-            data: self.data.iter().map(|v| 1.0 / (1.0 + (-v).exp())).collect(),
-        }
+    pub fn sigmoid(&mut self) {
+        self.data = self.data.iter().map(|v| 1.0 / (1.0 + (-v).exp())).collect();
     }
 
     pub fn flatten(&mut self) {

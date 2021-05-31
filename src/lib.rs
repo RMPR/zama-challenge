@@ -29,20 +29,23 @@ mod tests {
 
     #[test]
     fn matrix_tanh() {
-        assert_eq!(
-            (matrix::Matrix::new(3, 3, 1.0)).tanh().data,
-            vec![0.7615941559557649; 9]
-        )
+        let mut m = matrix::Matrix::new(3, 3, 1.0);
+        m.tanh();
+        assert_eq!(m.data, vec![0.7615941559557649; 9])
     }
 
     #[test]
     fn matrix_relu() {
-        assert_eq!((matrix::Matrix::new(3, 4, -1.0)).relu().data, vec![0.0; 12])
+        let mut m = matrix::Matrix::new(3, 4, -1.0);
+        m.relu();
+        assert_eq!(m.data, vec![0.0; 12]);
     }
 
     #[test]
     fn matrix_sigmoid() {
-        assert_eq!((matrix::Matrix::new(3, 4, 0.0)).sigmoid().data, vec![0.5; 12]);
+        let mut m = matrix::Matrix::new(4, 3, 0.0);
+        m.sigmoid();
+        assert_eq!(m.data, vec![0.5; 12]);
     }
 
     #[test]
