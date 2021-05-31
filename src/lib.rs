@@ -1,12 +1,9 @@
+/// This module contains tests
 mod matrix;
+
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
 
     #[test]
     fn matrix_creation() {
@@ -28,5 +25,26 @@ mod tests {
             (matrix::Scalar::new(4.0) * matrix::Matrix::new(3, 3, 1.0)).data,
             vec![4.0; 9]
         );
+    }
+
+    #[test]
+    fn matrix_tanh() {
+        assert_eq!(
+            (matrix::Matrix::new(3, 3, 1.0)).tanh().data,
+            vec![0.7615941559557649; 9]
+        )
+    }
+
+    #[test]
+    fn matrix_relu() {
+        assert_eq!((matrix::Matrix::new(3, 4, -1.0)).relu().data, vec![0.0; 12])
+    }
+
+    #[test]
+    fn matrix_sigmoid() {
+        //assert_eq!((matrix::Matrix::new(3, 4, -1.0)).sigmoid().data, vec![0.0; 12])
+        let a = (matrix::Matrix::new(3, 4, 0.0)).sigmoid().data;
+        println!("content {:?}", a);
+        println!("a printed!");
     }
 }

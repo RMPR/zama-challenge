@@ -11,6 +11,7 @@ pub struct Matrix {
 }
 
 impl Matrix {
+    /// Create a new Matrix initializing all elements with e
     pub fn new(n: usize, m: usize, e: f64) -> Matrix {
         let matrix = Matrix {
             n,
@@ -20,16 +21,42 @@ impl Matrix {
         return matrix;
     }
 
+    /// Return the element at line i and column j
     pub fn get(i: usize, j: usize) -> f64 {
         0.0
+    }
+
+    /// Apply tanh on each element of the Matrix and return a new one
+    pub fn tanh(self) -> Matrix {
+        Matrix {
+            n: self.n,
+            m: self.m,
+            data: self.data.iter().map(|v| v.tanh()).collect(),
+        }
+    }
+
+    /// Apply relU on each element of the Matrix and return a new one
+    pub fn relu(self) -> Matrix {
+        Matrix {
+            n: self.n,
+            m: self.m,
+            data: self.data.iter().map(|v| v.max(0.0)).collect(),
+        }
+    }
+
+    /// Apply sigmoid on each element of the Matrix and return a new one
+    pub fn sigmoid(self) -> Matrix {
+        Matrix {
+            n: self.n,
+            m: self.m,
+            data: self.data.iter().map(|v| 1.0 / (1.0 + (-v).exp())).collect(),
+        }
     }
 }
 
 impl Scalar {
     pub fn new(value: f64) -> Scalar {
-        Scalar {
-            value,
-        }
+        Scalar { value }
     }
 }
 
