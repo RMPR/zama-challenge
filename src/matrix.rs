@@ -5,8 +5,8 @@ pub struct Scalar {
 }
 
 pub struct Matrix {
-    n: usize,
-    m: usize,
+    pub n: usize,
+    pub m: usize,
     pub data: Vec<f64>,
 }
 
@@ -51,6 +51,11 @@ impl Matrix {
             m: self.m,
             data: self.data.iter().map(|v| 1.0 / (1.0 + (-v).exp())).collect(),
         }
+    }
+
+    pub fn flatten(&mut self) {
+        self.m *= self.n;
+        self.n = 1;
     }
 }
 

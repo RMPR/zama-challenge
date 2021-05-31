@@ -42,9 +42,15 @@ mod tests {
 
     #[test]
     fn matrix_sigmoid() {
-        //assert_eq!((matrix::Matrix::new(3, 4, -1.0)).sigmoid().data, vec![0.0; 12])
-        let a = (matrix::Matrix::new(3, 4, 0.0)).sigmoid().data;
-        println!("content {:?}", a);
-        println!("a printed!");
+        assert_eq!((matrix::Matrix::new(3, 4, 0.0)).sigmoid().data, vec![0.5; 12]);
+    }
+
+    #[test]
+    fn matrix_flatten() {
+        let mut m = matrix::Matrix::new(4, 3, 1.0);
+        m.flatten();
+        assert_eq!(m.data, vec![1.0; 12]);
+        assert_eq!(m.n, 1);
+        assert_eq!(m.m, 12);
     }
 }
